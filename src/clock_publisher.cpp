@@ -19,7 +19,12 @@
 void ClockPublisher::onTimer()
 {
   const rclcpp::Duration dif_time = (this->now() - base_time_) * speed_rate_;
-  const rclcpp::Time current_time = base_time_ + dif_time;
+  rclcpp::Time current_time;
+  if (time_start_from_zero_) {
+    current_time = rclcpp::Time(0) + dif_time;
+  } else {
+    current_time = base_time_ + dif_time;
+  }
   rosgraph_msgs::msg::Clock clock;
   clock.set__clock(current_time);
   clock_pub_->publish(clock);
@@ -31,7 +36,8 @@ ClockPublisher::ClockPublisher(const rclcpp::NodeOptions & node_options)
   base_time_ = this->now();
   clock_pub_ = this->create_publisher<rosgraph_msgs::msg::Clock>("/clock", 1);
   const int rate = this->declare_parameter("rate", 200);
-  speed_rate_ = this->declare_parameter("speed_rate", 1.0);
+  speed_rate_ = this->declare_parameter<double>("speed_rate", 1.0);
+  time_start_from_zero_ = this->declare_parameter<bool>("time_start_from_zero", false);
 
   // Timer
   auto timer_callback = std::bind(&ClockPublisher::onTimer, this);

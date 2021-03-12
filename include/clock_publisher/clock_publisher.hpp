@@ -35,6 +35,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Time base_time_;
   double speed_rate_;
+  bool time_start_from_zero_;
 };
 
 #endif
