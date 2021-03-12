@@ -1,6 +1,8 @@
 <launch>
   <arg name="rate" default="200"/>
+  <arg name="speed_rate" default="1.0"/>
   <node pkg="clock_publisher" exec="clock_publisher_node" name="clock_publisher" output="screen">
     <param name="rate" value="$(var rate)"/>
+    <param name="speed_rate" value="$(var speed_rate)"/>
   </node>
 </launch>

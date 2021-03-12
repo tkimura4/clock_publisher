@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #ifndef CLOCK_PUBLISHER_CLOCK_PUBLISHER_H
-#define CLOCK_PUBLISHER_CLOCK_PUBLISHER_H 
+#define CLOCK_PUBLISHER_CLOCK_PUBLISHER_H
 
 #include <string>
 
@@ -33,6 +33,8 @@ private:
   void onTimer();
   rclcpp::Publisher<rosgraph_msgs::msg::Clock>::SharedPtr clock_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Time base_time_;
+  double speed_rate_;
 };
 
 #endif
